@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"sync"
 	"time"
+	"os"
 )
 
 type Gravity int
@@ -841,23 +842,42 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	if err := loadTemplates(); err != nil {
-		panic("Erreur chargement templates: " + err.Error())
-	}
-	http.HandleFunc("/", startHandler)
-	http.HandleFunc("/mode", modeHandler)
-	http.HandleFunc("/ai-move", aiMoveHandler)
-	http.HandleFunc("/connect4", handler)
-	// Servez le CSS avec des en-têtes no-cache pour éviter les problèmes de cache navigateur
-	http.HandleFunc("/style.css", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
-		w.Header().Set("Pragma", "no-cache")
-		w.Header().Set("Expires", "0")
-		http.ServeFile(w, r, "style.css")
-	})
-	http.Handle("/favicon.svg", http.FileServer(http.Dir(".")))
-	fmt.Println("Serveur Puissance 4 Go sur http://localhost:8080/")
-	http.ListenAndServe(":8080", nil)
+    // 1. Chargement des templates (comme sur ta photo)
+    if err := loadTemplates(); err != nil {
+        panic("Erreur chargement templates: " + err.Error())
+    }
+
+    // 2. Tes routes (comme sur ta photo)
+    http.HandleFunc("/", startHandler)
+    http.HandleFunc("/mode", modeHandler)
+    http.HandleFunc("/ai-move", aiMoveHandler)
+    http.HandleFunc("/connect4", handler)
+
+    // 3. Gestion du CSS avec cache désactivé (comme sur ta photo)
+    http.HandleFunc("/style.css", func(w http.ResponseWriter, r *http.Request) {
+        w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+        w.Header().Set("Pragma", "no-cache")
+        w.Header().Set("Expires", "0")
+        http.ServeFile(w, r, "style.css")
+    })
+
+    // 4. Favicon
+    http.Handle("/favicon.svg", http.FileServer(http.Dir(".")))
+
+    // 5. GESTION INTELLIGENTE DU PORT (Modifié pour le serveur et le local)
+    port := os.Getenv("PORT")
+
+    if port == "" {
+        // En local, on force le 8082 pour ne pas gêner le Groupie Tracker (8081)
+        port = "8082"
+        fmt.Println("Mode Local : Serveur Puissance 4 Go sur http://localhost:8082")
+    } else {
+        // Sur le serveur (Coolify), on utilise le port qu'il nous donne
+        fmt.Println("Mode Serveur : Démarrage sur le port :" + port)
+    }
+
+    // 6. Lancement du serveur
+    http.ListenAndServe(":"+port, nil)
 }
 
 // aiMoveHandler effectue le coup de l'IA lorsqu'il est appelé (endpoint POST)
