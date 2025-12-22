@@ -33,6 +33,8 @@
         }
         .game-board {
             margin-top: 20px;
+            /* On s'assure que le plateau a une marge pour le scroll */
+            scroll-margin-top: 50px; 
         }
         .controls {
             margin-top: 20px;
@@ -129,9 +131,11 @@
             Joueur : {{.Username1}} | Difficulté : {{.Difficulty}} | Mode : VS IA ({{if eq .AILevel 0}}Facile{{else if eq .AILevel 1}}Moyen{{else}}Difficile{{end}})
         {{end}}
         </h2>
-        <div class="game-board">
+        
+        <div class="game-board" id="gameBoardArea">
             {{.BoardHTML}}
         </div>
+
         <div class="controls" id="controls">
             <form method="POST">
                 {{if .GameOver}}
@@ -165,6 +169,17 @@
     </script>
     {{end}}
     
-    
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Sélectionne la zone du plateau via l'ID ajouté plus haut
+        const boardArea = document.getElementById('gameBoardArea');
+        
+        // Si le plateau existe sur la page, on scroll vers lui
+        if (boardArea) {
+            // 'center' aligne le plateau au milieu de l'écran verticalement
+            boardArea.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    });
+    </script>
 </body>
 </html>
