@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Puissance 4</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="stylesheet" href="/style.css?v=3">
     <style>
         body.skin-classic {
@@ -33,7 +34,7 @@
         }
         .game-board {
             margin-top: 20px;
-            /* On s'assure que le plateau a une marge pour le scroll */
+            /* Marge pour que le scroll ne colle pas le plateau tout en haut */
             scroll-margin-top: 50px; 
         }
         .controls {
@@ -171,12 +172,9 @@
     
     <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Sélectionne la zone du plateau via l'ID ajouté plus haut
         const boardArea = document.getElementById('gameBoardArea');
-        
-        // Si le plateau existe sur la page, on scroll vers lui
         if (boardArea) {
-            // 'center' aligne le plateau au milieu de l'écran verticalement
+            // Centre le plateau verticalement sur l'écran
             boardArea.scrollIntoView({ behavior: "smooth", block: "center" });
         }
     });
