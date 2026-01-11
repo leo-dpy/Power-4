@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Puissance 4</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" href="/style.css?v=3">
     <style>
         body.skin-classic {
             background: #0d1b2a;
             color: #ffeccc;
         }
+
         body.skin-neon {
             background: #0d0d0d;
             color: #00ffcc;
         }
+
         body.skin-retro {
             background: #3b2f2f;
             color: #fbe8c6;
         }
+
         .game-container {
             display: flex;
             flex-direction: column;
@@ -25,6 +29,7 @@
             min-height: 100vh;
             padding: 20px;
         }
+
         .game-title {
             font-family: 'Press Start 2P', 'Fira Mono', monospace;
             font-size: 1.8em;
@@ -32,19 +37,23 @@
             text-align: center;
             text-shadow: 0 0 2px #fff2, 0 0 8px #00d9ff22, 0 0 18px #00d9ff22;
         }
+
         .game-board {
             margin-top: 20px;
             /* Marge pour que le scroll ne colle pas le plateau tout en haut */
-            scroll-margin-top: 50px; 
+            scroll-margin-top: 50px;
         }
+
         .controls {
             margin-top: 20px;
             transition: opacity 0.3s ease;
         }
+
         .controls.hidden {
             opacity: 0;
             pointer-events: none;
         }
+
         .controls button {
             padding: 10px 20px;
             font-size: 1em;
@@ -55,17 +64,21 @@
             cursor: pointer;
             transition: background 0.15s, color 0.15s, border 0.15s;
         }
+
         .controls button:hover {
             background: #ffe066;
             color: #1e3a5c;
             border-color: #ffe066;
         }
+
         .end-overlay {
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(13,27,42,0.97);
+            background: rgba(13, 27, 42, 0.97);
             color: #ffeccc;
             display: flex;
             flex-direction: column;
@@ -77,19 +90,23 @@
             z-index: 1000;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s cubic-bezier(.4,2,.6,.9);
+            transition: opacity 0.5s cubic-bezier(.4, 2, .6, .9);
         }
+
         .end-overlay.visible {
             opacity: 1;
             pointer-events: auto;
         }
+
         .end-overlay .end-msg {
             text-shadow: 0 0 8px #ffe066, 0 0 24px #c44536;
             margin-bottom: 32px;
         }
+
         .end-overlay .end-btns {
             margin-top: 24px;
         }
+
         .end-overlay button {
             font-size: 1.1em;
             padding: 12px 32px;
@@ -102,37 +119,43 @@
             margin: 0 12px;
             transition: background 0.15s, color 0.15s, border 0.15s;
         }
+
         .end-overlay button:hover {
             background: #ffe066;
             color: #0d1b2a;
             border-color: #ffe066;
         }
+
         @keyframes drop {
             0% {
                 transform: translateY(-100px);
                 opacity: 0;
             }
+
             100% {
                 transform: translateY(0);
                 opacity: 1;
             }
         }
+
         .token-wrap.just-played {
             animation: drop 0.4s ease-out;
         }
     </style>
 </head>
+
 <body class="skin-{{.Skin}}">
     <div class="game-container">
         <h1 class="game-title">Puissance 4</h1>
         <h2>
-        {{if eq .GameMode 0}}
+            {{if eq .GameMode 0}}
             Joueur 1 : {{.Username1}} | Joueur 2 : {{.Username2}} | Difficulté : {{.Difficulty}}
-        {{else}}
-            Joueur : {{.Username1}} | Difficulté : {{.Difficulty}} | Mode : VS IA ({{if eq .AILevel 0}}Facile{{else if eq .AILevel 1}}Moyen{{else}}Difficile{{end}})
-        {{end}}
+            {{else}}
+            Joueur : {{.Username1}} | Difficulté : {{.Difficulty}} | Mode : VS IA ({{if eq .AILevel 0}}Facile{{else if
+            eq .AILevel 1}}Moyen{{else}}Difficile{{end}})
+            {{end}}
         </h2>
-        
+
         <div class="game-board" id="gameBoardArea">
             {{.BoardHTML}}
         </div>
@@ -140,7 +163,7 @@
         <div class="controls" id="controls">
             <form method="POST">
                 {{if .GameOver}}
-                    <button name="rematch" value="1">Revanche</button>
+                <button name="rematch" value="1">Revanche</button>
                 {{end}}
             </form>
         </div>
@@ -159,25 +182,26 @@
         </div>
     </div>
     <script>
-    window.addEventListener('DOMContentLoaded', function() {
-        const endOverlay = document.getElementById('endOverlay');
-        const controls = document.getElementById('controls');
-        setTimeout(function() {
-            endOverlay.classList.add('visible');
-            controls.classList.add('hidden'); // Cache les boutons de base
-        }, 200);
-    });
+        window.addEventListener('DOMContentLoaded', function () {
+            const endOverlay = document.getElementById('endOverlay');
+            const controls = document.getElementById('controls');
+            setTimeout(function () {
+                endOverlay.classList.add('visible');
+                controls.classList.add('hidden'); // Cache les boutons de base
+            }, 200);
+        });
     </script>
     {{end}}
-    
+
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const boardArea = document.getElementById('gameBoardArea');
-        if (boardArea) {
-            // Centre le plateau verticalement sur l'écran
-            boardArea.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-    });
+        document.addEventListener("DOMContentLoaded", function () {
+            const boardArea = document.getElementById('gameBoardArea');
+            if (boardArea) {
+                // Centre le plateau verticalement sur l'écran
+                boardArea.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        });
     </script>
 </body>
+
 </html>

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Choix du mode de jeu</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" href="/style.css?v=3">
     <style>
         body {
@@ -12,6 +13,7 @@
             margin: 0;
             padding: 0;
         }
+
         .mode-container {
             display: flex;
             flex-direction: column;
@@ -20,6 +22,7 @@
             min-height: 100vh;
             padding: 20px;
         }
+
         .mode-title {
             font-family: 'Press Start 2P', 'Fira Mono', monospace;
             font-size: 2.5em;
@@ -28,12 +31,14 @@
             color: #ffeccc;
             text-shadow: 0 0 2px #fff2, 0 0 8px #00d9ff22, 0 0 18px #00d9ff22;
         }
+
         .mode-choice {
             display: flex;
             gap: 2em;
             justify-content: center;
             flex-wrap: wrap;
         }
+
         .mode-btn {
             padding: 24px 40px;
             font-size: 1.5em;
@@ -47,20 +52,25 @@
             box-shadow: 0 2px 8px #0003;
             transition: background 0.15s, color 0.15s, border 0.15s, transform 0.2s;
         }
-        .mode-btn:hover, .mode-btn:focus {
+
+        .mode-btn:hover,
+        .mode-btn:focus {
             background: #274472;
             color: #ffe066;
             border-color: #ffe066;
             transform: scale(1.05);
         }
+
         .mode-btn:active {
             transform: scale(0.98);
         }
+
         .mode-icon {
             font-size: 2em;
             display: block;
             margin-bottom: 8px;
         }
+
         .mode-description {
             font-size: 0.9em;
             color: #8ab6ff;
@@ -68,6 +78,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="mode-container">
         <div class="mode-title">Choisissez le mode de jeu</div>
@@ -95,4 +106,5 @@
         </form>
     </div>
 </body>
+
 </html>

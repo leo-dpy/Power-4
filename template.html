@@ -1,95 +1,99 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>CONNECT FOUR</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.png    ">
     <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    
+
 </head>
+
 <body>
     <!-- Titre principal du jeu -->
     <h1 style="font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace; letter-spacing:0.08em;">CONNECT FOUR</h1>
-    
+
     <!-- Plateau de jeu généré dynamiquement -->
     <div class="center-board">{{.BoardHTML}}</div>
     <!-- Message de victoire ou de match nul -->
     {{if .Winner}}
-        <div class="winner">🎉 {{if eq .Winner 1}}Player <span style="color:#c44536;">Red</span>{{else}}Player <span style="color:#ffe066;">Yellow</span>{{end}} gagne!</div>
+    <div class="winner">🎉 {{if eq .Winner 1}}Player <span style="color:#c44536;">Red</span>{{else}}Player <span
+            style="color:#ffe066;">Yellow</span>{{end}} gagne!</div>
     {{else if .GameOver}}
-        <div class="draw">Match nul</div>
+    <div class="draw">Match nul</div>
     {{end}}
 </body>
 <script>
-// Interaction: 1st click selects column (shows selector on top), 2nd click confirms and submits
-(function(){
+    // Interaction: 1st click selects column (shows selector on top), 2nd click confirms and submits
+    (function () {
         const board = document.getElementById('board');
         const wrap = document.getElementById('board-wrap');
-    if(!board) return;
-    const gameOver = board.getAttribute('data-gameover') === '1';
-    const form = document.getElementById('board-form');
-    const colInput = document.getElementById('col-input');
-    const selector = document.getElementById('selector');
-    if (gameOver) return; // no interactions when game over
+        if (!board) return;
+        const gameOver = board.getAttribute('data-gameover') === '1';
+        const form = document.getElementById('board-form');
+        const colInput = document.getElementById('col-input');
+        const selector = document.getElementById('selector');
+        if (gameOver) return; // no interactions when game over
 
-    let selectedCol = null;
-                const cellRect = board.querySelector('td')?.getBoundingClientRect();
-                const cellSize = cellRect ? cellRect.width : 80;
-                // Read from CSS variables to avoid mismatch
-                const rootStyles = getComputedStyle(document.documentElement);
-                const tokenSize = parseFloat(rootStyles.getPropertyValue('--token-size')) || 66;
-                // read actual border-spacing from computed styles
-                function getBorderSpacingXY(el){
-                    const bs = getComputedStyle(el).borderSpacing; // e.g., "14px 14px"
-                    if(!bs) return {x:14,y:14};
-                    const parts = bs.split(' ');
-                    const x = parseFloat(parts[0]) || 14;
-                    const y = parseFloat(parts[1] || parts[0]) || x;
-                    return {x,y};
-                }
-                const {x: gapX, y: gapY} = getBorderSpacingXY(board);
-
-                function positionSelector(colIndex){
-                    const wrapRect = wrap.getBoundingClientRect();
-                    const boardRect = board.getBoundingClientRect();
-                    const topCell = board.querySelector(`tr:first-child td[data-col='${colIndex}']`);
-                    if(!topCell) return;
-                    const cellRect = topCell.getBoundingClientRect();
-                        // place selector at the top center of the cell; CSS transform centers it and lifts it above the board
-                        const x = (cellRect.left - wrapRect.left) + cellRect.width / 2;
-                        const selGap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--selector-gap')) || 8;
-                        const y = (boardRect.top - wrapRect.top) - selGap; // small visual gap from CSS var
-                    selector.style.display = 'block';
-                    selector.style.left = x + 'px';
-                    selector.style.top = y + 'px';
-                        selector.style.width = tokenSize + 'px';
-                        selector.style.height = tokenSize + 'px';
-                }
-
-    board.addEventListener('click', function(e){
-        const td = e.target.closest('td');
-        if(!td || !board.contains(td)) return;
-        const col = td.getAttribute('data-col');
-        if(col == null) return;
-        const colIndex = parseInt(col, 10);
-        if(selectedCol === colIndex){
-            // Confirm: submit
-            colInput.value = String(colIndex);
-            form.submit();
-            return;
+        let selectedCol = null;
+        const cellRect = board.querySelector('td')?.getBoundingClientRect();
+        const cellSize = cellRect ? cellRect.width : 80;
+        // Read from CSS variables to avoid mismatch
+        const rootStyles = getComputedStyle(document.documentElement);
+        const tokenSize = parseFloat(rootStyles.getPropertyValue('--token-size')) || 66;
+        // read actual border-spacing from computed styles
+        function getBorderSpacingXY(el) {
+            const bs = getComputedStyle(el).borderSpacing; // e.g., "14px 14px"
+            if (!bs) return { x: 14, y: 14 };
+            const parts = bs.split(' ');
+            const x = parseFloat(parts[0]) || 14;
+            const y = parseFloat(parts[1] || parts[0]) || x;
+            return { x, y };
         }
-        // First click: select and show selector above
-        selectedCol = colIndex;
+        const { x: gapX, y: gapY } = getBorderSpacingXY(board);
+
+        function positionSelector(colIndex) {
+            const wrapRect = wrap.getBoundingClientRect();
+            const boardRect = board.getBoundingClientRect();
+            const topCell = board.querySelector(`tr:first-child td[data-col='${colIndex}']`);
+            if (!topCell) return;
+            const cellRect = topCell.getBoundingClientRect();
+            // place selector at the top center of the cell; CSS transform centers it and lifts it above the board
+            const x = (cellRect.left - wrapRect.left) + cellRect.width / 2;
+            const selGap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--selector-gap')) || 8;
+            const y = (boardRect.top - wrapRect.top) - selGap; // small visual gap from CSS var
+            selector.style.display = 'block';
+            selector.style.left = x + 'px';
+            selector.style.top = y + 'px';
+            selector.style.width = tokenSize + 'px';
+            selector.style.height = tokenSize + 'px';
+        }
+
+        board.addEventListener('click', function (e) {
+            const td = e.target.closest('td');
+            if (!td || !board.contains(td)) return;
+            const col = td.getAttribute('data-col');
+            if (col == null) return;
+            const colIndex = parseInt(col, 10);
+            if (selectedCol === colIndex) {
+                // Confirm: submit
+                colInput.value = String(colIndex);
+                form.submit();
+                return;
+            }
+            // First click: select and show selector above
+            selectedCol = colIndex;
             // highlight column
             board.querySelectorAll('td').forEach(td => td.classList.remove('col-selected'));
             board.querySelectorAll(`td[data-col='${colIndex}']`).forEach(td => td.classList.add('col-selected'));
-        positionSelector(colIndex);
-    });
+            positionSelector(colIndex);
+        });
 
         // Reposition selector on resize/scroll to keep alignment
-        window.addEventListener('resize', () => { if(selectedCol != null) positionSelector(selectedCol); });
-        window.addEventListener('scroll', () => { if(selectedCol != null) positionSelector(selectedCol); }, { passive: true });
-})();
+        window.addEventListener('resize', () => { if (selectedCol != null) positionSelector(selectedCol); });
+        window.addEventListener('scroll', () => { if (selectedCol != null) positionSelector(selectedCol); }, { passive: true });
+    })();
 </script>
+
 </html>
