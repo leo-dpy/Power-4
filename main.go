@@ -794,12 +794,20 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	endMessage := ""
 	if game.GameOver {
 		if game.Winner == 1 {
-			endMessage = "🎉 Victoire !"
+			name := game.Username1
+			if name == "" {
+				name = "Joueur 1"
+			}
+			endMessage = "🎉 Victoire de " + name + " !"
 		} else if game.Winner == 2 {
 			if game.GameMode == ModeHumanVsAI {
 				endMessage = "🤖 L'IA a gagné !"
 			} else {
-				endMessage = "💀 Défaite !"
+				name := game.Username2
+				if name == "" {
+					name = "Joueur 2"
+				}
+				endMessage = "🎉 Victoire de " + name + " !"
 			}
 		} else {
 			endMessage = "Match nul !"
@@ -865,7 +873,9 @@ func main() {
 	})
 
 	// 4. Favicon
-	http.Handle("/favicon.svg", http.FileServer(http.Dir(".")))
+	http.HandleFunc("/favicon.png", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "favicon.png")
+	})
 
 	// 5. GESTION INTELLIGENTE DU PORT (Modifié pour le serveur et le local)
 	port := os.Getenv("PORT")

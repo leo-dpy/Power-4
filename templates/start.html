@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Puissance 4 - Démarrer</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="stylesheet" href="/style.css?v=3">
     <style>
         body {
@@ -11,18 +13,22 @@
             margin: 0;
             padding: 0;
         }
+
         body.skin-classic {
             background: #0d1b2a;
             color: #ffeccc;
         }
+
         body.skin-neon {
             background: #0d0d0d;
             color: #00ffcc;
         }
+
         body.skin-retro {
             background: #3b2f2f;
             color: #fbe8c6;
         }
+
         .main-layout {
             display: flex;
             justify-content: center;
@@ -31,8 +37,10 @@
             gap: 4vw;
             padding: 20px;
         }
-        .form-panel, .preview-panel {
-            background: rgba(30,58,92,0.97);
+
+        .form-panel,
+        .preview-panel {
+            background: rgba(30, 58, 92, 0.97);
             border-radius: 24px;
             box-shadow: 0 8px 32px #0008;
             padding: 48px;
@@ -42,6 +50,7 @@
             min-width: 340px;
             max-width: 400px;
         }
+
         .form-panel h1 {
             font-family: 'Press Start 2P', 'Fira Mono', monospace;
             font-size: 2.2em;
@@ -50,6 +59,7 @@
             color: inherit;
             text-shadow: 0 0 2px #fff2, 0 0 8px #00d9ff22, 0 0 18px #00d9ff22;
         }
+
         .form-panel label {
             font-size: 1.25em;
             margin-bottom: 18px;
@@ -59,7 +69,9 @@
             color: inherit;
             font-family: 'Fira Mono', monospace;
         }
-        .form-panel input[type="text"], .form-panel select {
+
+        .form-panel input[type="text"],
+        .form-panel select {
             font-size: 1.1em;
             padding: 10px 14px;
             border-radius: 8px;
@@ -73,9 +85,12 @@
             outline: none;
             transition: border 0.15s;
         }
-        .form-panel input[type="text"]:focus, .form-panel select:focus {
+
+        .form-panel input[type="text"]:focus,
+        .form-panel select:focus {
             border-color: #ffe066;
         }
+
         .form-panel button {
             padding: 12px 38px;
             font-size: 1.25em;
@@ -89,25 +104,32 @@
             box-shadow: 0 2px 8px #0003;
             transition: background 0.15s, color 0.15s, border 0.15s;
         }
+
         .form-panel button:hover {
             background: #ffe066;
             color: #1e3a5c;
             border-color: #ffe066;
         }
+
         .preview-panel {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
+
         /* Skin chooser cards */
-        .skin-chooser { width: 100%; }
+        .skin-chooser {
+            width: 100%;
+        }
+
         .skins-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
             width: 100%;
         }
+
         .skin-card {
             position: relative;
             display: flex;
@@ -122,25 +144,92 @@
             transition: transform .15s, box-shadow .15s, border-color .15s, background .15s;
             user-select: none;
         }
-        .skin-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px #0005; border-color: #ffe066; }
-        .skin-card.selected { border-color: #ffe066; box-shadow: 0 6px 16px #0006; background: #1a2d4a; }
-        .skin-card input { position: absolute; opacity: 0; pointer-events: none; }
-        .skin-thumb {
-            width: 100%; height: 56px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: space-around;
-            margin-bottom: 8px; padding: 6px;
+
+        .skin-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px #0005;
+            border-color: #ffe066;
         }
-        .skin-thumb.classic { background: #1e3a5c; border: 2px solid #274472; }
-        .skin-thumb.neon    { background: #0d0d0d; border: 2px solid #00ffcc; }
-        .skin-thumb.retro   { background: #3b2f2f; border: 2px solid #d9534f; }
-        .skin-thumb .disc { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #ffeccc; box-shadow: 0 1px 2px #0006; }
-        .skin-thumb.classic .disc.red { background:#c44536; }
-        .skin-thumb.classic .disc.yellow { background:#ffe066; }
-        .skin-thumb.neon .disc.red { background:#ff0066; border-color:#ff99cc; }
-        .skin-thumb.neon .disc.yellow { background:#ffcc00; border-color:#ffff99; }
-        .skin-thumb.retro .disc.red { background:#d9534f; border-color:#f7c6c6; }
-        .skin-thumb.retro .disc.yellow { background:#f0ad4e; border-color:#fbe8c6; }
-        .skin-name { font-size: 0.95em; opacity: 0.95; }
+
+        .skin-card.selected {
+            border-color: #ffe066;
+            box-shadow: 0 6px 16px #0006;
+            background: #1a2d4a;
+        }
+
+        .skin-card input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .skin-thumb {
+            width: 100%;
+            height: 56px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin-bottom: 8px;
+            padding: 6px;
+        }
+
+        .skin-thumb.classic {
+            background: #1e3a5c;
+            border: 2px solid #274472;
+        }
+
+        .skin-thumb.neon {
+            background: #0d0d0d;
+            border: 2px solid #00ffcc;
+        }
+
+        .skin-thumb.retro {
+            background: #3b2f2f;
+            border: 2px solid #d9534f;
+        }
+
+        .skin-thumb .disc {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid #ffeccc;
+            box-shadow: 0 1px 2px #0006;
+        }
+
+        .skin-thumb.classic .disc.red {
+            background: #c44536;
+        }
+
+        .skin-thumb.classic .disc.yellow {
+            background: #ffe066;
+        }
+
+        .skin-thumb.neon .disc.red {
+            background: #ff0066;
+            border-color: #ff99cc;
+        }
+
+        .skin-thumb.neon .disc.yellow {
+            background: #ffcc00;
+            border-color: #ffff99;
+        }
+
+        .skin-thumb.retro .disc.red {
+            background: #d9534f;
+            border-color: #f7c6c6;
+        }
+
+        .skin-thumb.retro .disc.yellow {
+            background: #f0ad4e;
+            border-color: #fbe8c6;
+        }
+
+        .skin-name {
+            font-size: 0.95em;
+            opacity: 0.95;
+        }
+
         .preview-title {
             font-family: 'Press Start 2P', 'Fira Mono', monospace;
             font-size: 1.3em;
@@ -150,6 +239,7 @@
             text-align: center;
             letter-spacing: 0.04em;
         }
+
         .skin-preview-board {
             display: grid;
             grid-template-columns: repeat(7, 60px);
@@ -160,18 +250,22 @@
             box-shadow: 0 6px 20px #0008;
             margin-top: 8px;
         }
+
         .skin-preview-board.classic {
             background: #1e3a5c;
             border: 2px solid #274472;
         }
+
         .skin-preview-board.neon {
             background: #0d0d0d;
             border: 2px solid #00ffcc;
         }
+
         .skin-preview-board.retro {
             background: #3b2f2f;
             border: 2px solid #d9534f;
         }
+
         .skin-preview-cell {
             width: 60px;
             height: 60px;
@@ -179,31 +273,40 @@
             margin: 0;
             box-shadow: 0 2px 4px #0004;
         }
+
         .skin-preview-cell.red {
             background: #c44536;
         }
+
         .skin-preview-cell.yellow {
             background: #ffe066;
         }
+
         .skin-preview-board.neon .skin-preview-cell.red {
             background: #ff0066;
         }
+
         .skin-preview-board.neon .skin-preview-cell.yellow {
             background: #ffcc00;
         }
+
         .skin-preview-board.retro .skin-preview-cell.red {
             background: #d9534f;
         }
+
         .skin-preview-board.retro .skin-preview-cell.yellow {
             background: #f0ad4e;
         }
+
         @media (max-width: 900px) {
             .main-layout {
                 flex-direction: column;
                 gap: 2vw;
                 padding: 20px;
             }
-            .form-panel, .preview-panel {
+
+            .form-panel,
+            .preview-panel {
                 margin: 0 auto;
                 width: 100%;
                 max-width: 400px;
@@ -211,13 +314,15 @@
         }
     </style>
 </head>
+
 <body class="skin-classic">
     <div class="main-layout">
         <form class="form-panel" method="POST">
             <h1>Bienvenue sur Puissance 4</h1>
             <label id="username1-label">
                 <span id="username1-text">Nom du joueur 1 :</span>
-                <input id="username-input" type="text" name="username" required autocomplete="off" maxlength="16" placeholder="Joueur 1">
+                <input id="username-input" type="text" name="username" required autocomplete="off" maxlength="16"
+                    placeholder="Joueur 1">
             </label>
             <label id="username2-label" style="display:none;">
                 Nom du joueur 2 :
@@ -278,7 +383,7 @@
                     </label>
                 </div>
             </div>
-            
+
             <div style="width:100%;display:flex;justify-content:center;">
                 <button type="submit">Commencer</button>
             </div>
@@ -337,7 +442,7 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const skinPreview = document.getElementById('skin-preview');
             const body = document.body;
             const skinCards = Array.from(document.querySelectorAll('.skin-card'));
@@ -382,4 +487,5 @@
         });
     </script>
 </body>
+
 </html>
