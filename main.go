@@ -872,6 +872,10 @@ func main() {
 		http.ServeFile(w, r, "style.css")
 	})
 
+	http.HandleFunc("/favicon.png", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "favicon.png")
+	})
+
 	// 5. GESTION DU PORT (Coolify)
 	port := os.Getenv("PORT")
 	if port == "" {
