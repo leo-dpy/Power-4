@@ -872,22 +872,12 @@ func main() {
 		http.ServeFile(w, r, "style.css")
 	})
 
-	// 4. Favicon
-	http.HandleFunc("/favicon.png", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "favicon.png")
-	})
-
-	// 5. GESTION INTELLIGENTE DU PORT (Modifié pour le serveur et le local)
+	// 5. GESTION DU PORT (Coolify)
 	port := os.Getenv("PORT")
-
 	if port == "" {
-		// En local, on force le 8082 pour ne pas gêner le Groupie Tracker (8081)
-		port = "8082"
-		fmt.Println("Mode Local : Serveur Puissance 4 Go sur http://localhost:8082")
-	} else {
-		// Sur le serveur (Coolify), on utilise le port qu'il nous donne
-		fmt.Println("Mode Serveur : Démarrage sur le port :" + port)
+		port = "8080"
 	}
+	fmt.Println("Server starting on port " + port)
 
 	// 6. Lancement du serveur
 	http.ListenAndServe(":"+port, nil)
