@@ -880,7 +880,7 @@ func main() {
 	// 5. GESTION DU PORT (Coolify)
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = "80"
 	}
 	fmt.Println("Server starting on port " + port)
 
