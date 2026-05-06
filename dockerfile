@@ -23,11 +23,9 @@ COPY --from=builder /app/power4 .
 
 # Récupération des assets (On est maniaque : on prend tout ce qui sert au rendu)
 COPY --from=builder /app/templates ./templates
-COPY --from=builder /app/static ./static 
 # On copie aussi les fichiers racines si ton code les cherche là
 COPY --from=builder /app/style.css .
 COPY --from=builder /app/favicon.svg .
-COPY --from=builder /app/template.html .
 
 # Configuration du port unique
 
